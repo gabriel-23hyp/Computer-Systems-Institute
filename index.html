@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Systems Institute</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #d32f2f;
+            --secondary: #1565c0;
+            --accent: #f9a825;
+            --dark: #212121;
+            --light: #f5f5f5;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+        }
+
+        /* Home Page */
+        #home {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding-top: 0;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--accent);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Courses Page */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Gallery & Events */
+        .gallery-grid, .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item, .event-item {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            background: white;
+        }
+
+        .gallery-item img, .event-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img, .event-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .event-info {
+            padding: 1rem;
+        }
+
+        .event-info h3 {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* About Page */
+        .about-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .about-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media(max-width:768px) {
+            .nav-links {
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: var(--secondary);
+                flex-direction: column;
+                padding: 1rem;
+                display: none;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <div class="nav-container">
+        <a href="#" class="logo">🏫 Computer Systems Institute</a>
+        <div class="menu-toggle" id="menuToggle">☰</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="nav-link active" data-page="home">Home</a></li>
+            <li><a href="#courses" class="nav-link" data-page="courses">Courses</a></li>
+            <li><a href="#gallery" class="nav-link" data-page="gallery">Gallery</a></li>
+            <li><a href="#events" class="nav-link" data-page="events">Events</a></li>
+            <li><a href="#about" class="nav-link" data-page="about">About</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HOME PAGE -->
+<section id="home" class="page active">
+    <div class="hero-content">
+        <h1>Welcome to Computer Systems Institute</h1>
+        <p>Empowering minds, building futures — where technology meets excellence. We are committed to providing quality education and training for the next generation of IT professionals.</p>
+        <a href="#about" class="btn nav-link" data-page="about">Learn More</a>
+    </div>
+</section>
+
+<!-- COURSES PAGE -->
+<section id="courses" class="page">
+    <div class="container">
+        <h2>📚 Our Courses</h2>
+        <div class="courses-grid">
+            <div class="course-card">
+                <h3>💻 Bachelor of Science in Information Technology</h3>
+                <p>Develop skills in programming, web development, database management, and network administration. Prepare for a career in the fast-growing IT industry.</p>
+            </div>
+            <div class="course-card">
+                <h3>📊 Computer Engineering Technology</h3>
+                <p>Learn hardware and software integration, electronics, networking, and system maintenance. Hands-on training for technical careers.</p>
+            </div>
+            <div class="course-card">
+                <h3>🌐 Information Systems</h3>
+                <p>Bridge business and technology. Learn how to design and manage information systems that help organizations operate efficiently.</p>
+            </div>
+            <div class="course-card">
+                <h3>🎓 Short-Term Certificate Programs</h3>
+                <p>Basic Computer Operations • MS Office • Web Design • PC Troubleshooting • Computer Networking</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- GALLERY PAGE -->
+<section id="gallery" class="page">
+    <div class="container">
+        <h2>📸 Our Gallery</h2>
+        <p style="text-align:center; margin-bottom:2rem;">Moments captured at Computer Systems Institute</p>
+        <div class="gallery-grid">
+            <!-- Your Images Here -->
+            <div class="gallery-item"><img src="img/zumba.jpg" alt="CSI Zumba Event"></div>
+            <div class="gallery-item"><img src="img/ched-group.jpg" alt="CHED AI Futures 2026"></div>
+            <div class="gallery-item"><img src="img/ched-speaker.jpg" alt="CHED Public Hearing"></div>
+            <div class="gallery-item"><img src="img/table15.jpg" alt="Conference Table 15"></div>
+            <div class="gallery-item"><img src="img/working.jpg" alt="Working Session"></div>
+            <div class="gallery-item"><img src="img/outside.jpg" alt="Outside the Venue"></div>
+        </div>
+        <p style="text-align:center; margin-top:1.5rem; color:#666;">💡 <strong>Note:</strong> Save your photos in a folder named <strong>"img"</strong> in the same folder as this file, and rename them to match the filenames above.</p>
+    </div>
+</section>
+
+<!-- EVENTS PAGE -->
+<section id="events" class="page">
+    <div class="container">
+        <h2>📅 Upcoming & Recent Events</h2>
+        <div class="events-grid">
+            <div class="event-item">
+                <img src="img/zumba.jpg" alt="Zumba Event">
+                <div class="event-info">
+                    <h3>Feel the Heat with Zumba Beat!</h3>
+                    <p><strong>📅 Date:</strong> October 17, 2026<br>
+                    <strong>⏰ Time:</strong> 8:00 AM<br>
+                    <strong>📍 Venue:</strong> CSI Main Campus, beside the CSI Canteen</p>
+                </div>
+            </div>
+            <div class="event-item">
+                <img src="img/ched-group.jpg" alt="CHED Event">
+                <div class="event-info">
+                    <h3>CHED AI Futures 2026</h3>
+                    <p><strong>📅 Date:</strong> October 19–21, 2026<br>
+                    <strong>📍 Venue:</strong> Luxent Hotel, Timog, Quezon City<br>
+                    Shaping AI-Enabled Higher Education — Zonal Public Hearing/Consultation</p>
+                </div>
+            </div>
+            <div class="event-item">
+                <img src="img/working.jpg" alt="Workshop">
+                <div class="event-info">
+                    <h3>Faculty & Staff Development</h3>
+                    <p>Collaborative planning and consultation sessions for curriculum updates and new program offerings.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT PAGE -->
+<section id="about" class="page">
+    <div class="container">
+        <h2>🏫 About Computer Systems Institute</h2>
+        <div class="about-section">
+            <h3>Our Mission</h3>
+            <p>To provide quality, accessible education and training in information technology and related fields, producing competent professionals who can contribute to the development of our community and nation.</p>
+
+            <h3>Our Vision</h3>
+            <p>To be a leading educational institution in the region, recognized for excellence in technology education, innovation, and community service.</p>
+
+            <h3>Who We Are</h3>
+            <p>Computer Systems Institute has been serving the community of Carmona, Cavite and surrounding areas for years. We offer a supportive learning environment, qualified instructors, and up-to-date facilities to ensure our students are ready for the real world.</p>
+
+            <h3>Contact Us</h3>
+            <p><strong>📍 Location:</strong> CSI Main Campus, Carmona, Cavite<br>
+            <strong>📞 Phone:</strong> (046) 123-4567<br>
+            <strong>✉️ Email:</strong> info@csi.edu.ph<br>
+            <strong>🕒 Office Hours:</strong> Monday–Friday, 8:00 AM – 5:00 PM</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2026 Computer Systems Institute. All Rights Reserved.</p>
+    <p style="margin-top:0.5rem; font-size:0.9rem;">Empowering Education • Building the Future</p>
+</footer>
+
+<!-- JavaScript -->
+<script>
+    // Page Navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page');
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinksContainer = document.getElementById('navLinks');
+
+    // Mobile Menu Toggle
+    menuToggle.addEventListener('click', () => {
+        navLinksContainer.classList.toggle('active');
+    });
+
+    // Switch Pages
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetPage = link.getAttribute('data-page');
+
+            // Update active nav link
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            // Show target page, hide others
+            pages.forEach(page => {
+                page.classList.remove('active');
+                if(page.id === targetPage) {
+                    page.classList.add('active');
+                }
+            });
+
+            // Close mobile menu
+            navLinksContainer.classList.remove('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+</script>
+
+</body>
+</html>
